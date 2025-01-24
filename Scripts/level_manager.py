@@ -22,6 +22,7 @@ PATH_TO_LEVELS = "../Levels/"
 # Easy peasy right?
 class Level:
     def __init__(self, level_num):
+        # Get level data from file
         self.level_num = level_num
         self.level_data = self.load_level_data()
 
