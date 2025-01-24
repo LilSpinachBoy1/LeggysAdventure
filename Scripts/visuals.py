@@ -4,7 +4,10 @@ MODULE FOR ALL VISUAL OUTPUTS:
 - Class for player sprite
 """
 import pygame
+import os
 from pygame.locals import *
+
+PATH_TO_SNAIL = os.getcwd() + "/Assets/SN_idle.png"
 
 
 class Tile(pygame.sprite.Sprite):
@@ -46,5 +49,45 @@ class Tile(pygame.sprite.Sprite):
 #     - Do movement
 # - Output the player sprite to the screen
 class Player(pygame.sprite.Sprite):
-    def __init__(self, image, map_coords: tuple, screen_size: tuple, tilemap_size: tuple):
+    def __init__(self, start_pos: tuple, screen_size: tuple, tilemap_data, tilemap, scale: int):
         super().__init__()
+
+        # Load the image and scale it
+        self.image = pygame.transform.scale(pygame.image.load(PATH_TO_SNAIL), (scale, scale))
+        self.rect = self.image.get_rect()
+        self.rect.topleft = start_pos
+
+        # Store params in the object
+        self.screen_size = screen_size
+        self.tilemap_data = tilemap_data
+        self.tilemap = tilemap
+        self.scale = scale
+
+        # Store constants
+        self.SPEED = 3
+        self.GRAVITY = 5
+
+    def movement_and_collisions(self):
+        keys = pygame.key.get_pressed()
+        inital_pos = self.rect.copy()  # Create the rect to simulate the movement
+        if keys[K_a]:
+            self.rect.x -= self.SPEED
+        if keys[K_d]:
+            self.rect.x += self.SPEED
+
+        # Check for collisions within the tilemap
+        is_collision = pygame.sprite.spritecollideany(self, self.tilemap)
+        while is_collision:
+            # This sets the amount that needs to be added to the rect to move it back towards the initial position
+            x_direction = 1 if self.rect.x < inital_pos.x else -1
+            y_direction = 1 if self.rect.y < inital_pos.y else -1
+
+            # Move the rect back towards the initial position
+            self.rect.x += x_direction
+            self.rect.y += y_direction
+
+            # Check for collisions again
+            is_collision = pygame.sprite.spritecollideany(self, self.tilemap)
+
+    def output(self, screen):
+        screen.blit(self.image, self.rect)
