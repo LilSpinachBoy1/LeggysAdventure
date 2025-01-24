@@ -5,13 +5,15 @@ SCRIPT TO COVER VARIOUS ASPECTS OF LEVEL MANAGEMENT, INCLUDING:
 - Load file assets for levels
 """
 import pygame
-import visuals
+import os
+from Scripts import visuals
 pygame.init()
 
 # CREATE CONSTANTS
 TILE_SIZE = 50  # This accommodates for a 16x16 tilemap, see 'TILEMAP_INFO.md' for more
-PATH_TO_TILEMAP = "../Assets/TILEMAP/"
-PATH_TO_LEVELS = "../Levels/"
+CURRENT_DIR = os.getcwd()
+PATH_TO_TILEMAP = CURRENT_DIR + "/Assets/TILEMAP/"
+PATH_TO_LEVELS = CURRENT_DIR + "/Levels/"
 
 
 # Create class to manage levels
