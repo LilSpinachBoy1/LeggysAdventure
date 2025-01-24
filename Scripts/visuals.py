@@ -85,8 +85,14 @@ class Player(pygame.sprite.Sprite):
         if keys[K_d]:
             self.rect.x += self.SPEED
 
+        # True if there is a collision due to the x movement
+        x_creates_collision = pygame.sprite.spritecollideany(self, self.tilemap_no_air)  # Not sure if this helps?
+
         # Do y movement
         self.rect.y += self.GRAVITY
+
+        # True if there is a collision due to the y movement
+        y_creates_collision = pygame.sprite.spritecollideany(self, self.tilemap_no_air)
 
         # Check for collisions within the tilemap
         # ISSUE: When player is grounded, they can't move left or right. This is because as the player falls, it triggers a ground collision
