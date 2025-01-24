@@ -5,6 +5,7 @@ SCRIPT TO COVER VARIOUS ASPECTS OF LEVEL MANAGEMENT, INCLUDING:
 - Load file assets for levels
 """
 import pygame
+import visuals
 pygame.init()
 
 # CREATE CONSTANTS
@@ -28,10 +29,13 @@ class Level:
 
         # Load tile assets
         self.tiles = {
-            0: pygame.image.load(PATH_TO_TILEMAP + "0.png"),
-            1: pygame.image.load(PATH_TO_TILEMAP + "1.png"),
-            2: pygame.image.load(PATH_TO_TILEMAP + "2.png"),
+            0: pygame.transform.scale(pygame.image.load(PATH_TO_TILEMAP + "0.png"), (TILE_SIZE, TILE_SIZE)),
+            1: pygame.transform.scale(pygame.image.load(PATH_TO_TILEMAP + "1.png"), (TILE_SIZE, TILE_SIZE)),
+            2: pygame.transform.scale(pygame.image.load(PATH_TO_TILEMAP + "2.png"), (TILE_SIZE, TILE_SIZE)),
         }
+
+        # Get the tilemap group
+        self.tilemap_sprite_group = self.create_group()
 
     def load_level_data(self) -> list:
         try:
@@ -43,6 +47,18 @@ class Level:
             return level_data
         except FileNotFoundError:
             print(f"Level {self.level_num} not found.")
+
+    # noinspection PyTypeChecker
+    def create_group(self) -> pygame.sprite.Group:
+        # ENUMERATE: This splits each item into its index and value
+        tile_group = pygame.sprite.Group()
+        for y, row in enumerate(self.level_data):
+            for x, tile in enumerate(row):
+                tile_group.add(visuals.Tile(self.tiles[int(tile)], (x, y), (800, 800), (16, 16)))
+        return tile_group
+
+    def output(self, screen):
+        self.tilemap_sprite_group.draw(screen)
 
 
 # TESTING
