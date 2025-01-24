@@ -4,6 +4,11 @@ from Scripts import level_manager as l_m
 
 pygame.init()
 
+# Colour constants
+WHITE = (255, 255, 255)
+BLACK = (0, 0, 0)
+PASTEL_BLUE = (0, 204, 255)
+
 # Create window
 WINDOW_SIZE = (800, 800)
 WINDOW = pygame.display.set_mode(WINDOW_SIZE)
@@ -20,7 +25,7 @@ while True:
             sys.exit()
 
     # Draw level
-    WINDOW.fill((255, 255, 255))
+    WINDOW.fill(PASTEL_BLUE)
     level1.output(WINDOW)
 
     pygame.display.flip()
