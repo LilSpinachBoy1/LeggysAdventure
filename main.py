@@ -14,6 +14,7 @@ PASTEL_BLUE = (0, 204, 255)
 WINDOW_SIZE = (800, 800)
 WINDOW = pygame.display.set_mode(WINDOW_SIZE)
 pygame.display.set_caption("Leggy's Big Adventure!")
+FPS = 120
 
 # Load Level
 level1 = l_m.Level(1)
@@ -34,5 +35,5 @@ while True:
     player.process(WINDOW)
 
     pygame.display.flip()
-    pygame.time.Clock().tick(60)
+    pygame.time.Clock().tick(FPS)
 

@@ -72,9 +72,10 @@ class Player(pygame.sprite.Sprite):
                 self.tilemap_no_air.append(tile)
 
         # Store constants
-        self.SPEED = 3
+        self.SPEED = 4
         self.GRAVITY = 5
 
+    # noinspection PyTypeChecker
     def movement_and_collisions(self):
         keys = pygame.key.get_pressed()
         initial_pos = self.rect.copy()  # Create the rect to simulate the movement
@@ -84,12 +85,22 @@ class Player(pygame.sprite.Sprite):
             self.rect.x += self.SPEED
 
         # Check for collisions within the tilemap
-        # TODO: Need to exclude air tiles from this check
         is_collision = pygame.sprite.spritecollideany(self, self.tilemap_no_air)
         while is_collision:
-            # This sets the amount that needs to be added to the rect to move it back towards the initial position
-            x_direction = 1 if self.rect.x < initial_pos.x else -1
-            y_direction = 1 if self.rect.y < initial_pos.y else -1
+            # These statements set the amount that needs to be added to the rect to move it back towards the initial position
+            if self.rect.x < initial_pos.x:
+                x_direction = 1
+            elif self.rect.x > initial_pos.x:
+                x_direction = -1
+            else:
+                x_direction = 0
+
+            if self.rect.y < initial_pos.y:
+                y_direction = 1
+            elif self.rect.y > initial_pos.y:
+                y_direction = -1
+            else:
+                y_direction = 0
 
             # Move the rect back towards the initial position
             self.rect.x += x_direction
