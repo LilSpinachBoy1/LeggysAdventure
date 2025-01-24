@@ -8,7 +8,7 @@ The second attempt at creating leggy's big adventure. Lets hope for the best...
 - [ ] Make player class
 - [ ] Make player move
 - [ ] Make player jump
-- [ ] Make player collide with tiles (gulp...)
+- [ ] Make player collide with tiles (CHECK COLLIDE BEFORE DOING MOVEMENT)
 ### Stretch goals:
 - [ ] Design 2 or 3 levels
 - [ ] Audio design
