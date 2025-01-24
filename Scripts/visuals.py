@@ -73,16 +73,20 @@ class Player(pygame.sprite.Sprite):
 
         # Store constants
         self.SPEED = 4
-        self.GRAVITY = 5
+        self.GRAVITY = 7
 
     # noinspection PyTypeChecker
     def movement_and_collisions(self):
         keys = pygame.key.get_pressed()
         initial_pos = self.rect.copy()  # Create the rect to simulate the movement
+        # Do x movement
         if keys[K_a]:
             self.rect.x -= self.SPEED
         if keys[K_d]:
             self.rect.x += self.SPEED
+
+        # Do y movement
+        self.rect.y += self.GRAVITY
 
         # Check for collisions within the tilemap
         is_collision = pygame.sprite.spritecollideany(self, self.tilemap_no_air)
