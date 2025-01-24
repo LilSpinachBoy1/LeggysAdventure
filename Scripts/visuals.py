@@ -31,3 +31,20 @@ class Tile(pygame.sprite.Sprite):
 
     def output(self, screen):
         screen.blit(self.image, self.rect)
+
+
+# WHAT THIS NEEDS TO DO
+# - Load an image for the player
+# - Scale the image to a set size
+# - MOVEMENT AND COLLISIONS:
+#   - Move the player sprite
+#   - Check for collisions
+#     - Make a new rect for where the player would move to with current movement
+#     - Check if this rect collides with any other rects
+#     - If it does, reduce the movement by one
+#     - Repeat until there is no collision
+#     - Do movement
+# - Output the player sprite to the screen
+class Player(pygame.sprite.Sprite):
+    def __init__(self, image, map_coords: tuple, screen_size: tuple, tilemap_size: tuple):
+        super().__init__()
