@@ -20,6 +20,7 @@ while True:
             sys.exit()
 
     # Draw level
+    WINDOW.fill((255, 255, 255))
     level1.output(WINDOW)
 
     pygame.display.flip()

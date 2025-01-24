@@ -9,6 +9,7 @@ Each type of tile has a corresponding code, which is as follows:
 - 0: Empty tile
 - 1: Mud tile (i.e. Brown)
 - 2: Grass tile (i.e. Green and brown)
+- 3: Brick tile
 
 ## Accessing tiles
 When a Level object is created, it creates a dictionary of tiles, with the key corresponding to each tile's code (see creating levels above).
