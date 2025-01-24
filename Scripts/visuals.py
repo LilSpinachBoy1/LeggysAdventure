@@ -11,8 +11,10 @@ PATH_TO_SNAIL = os.getcwd() + "/Assets/SN_idle.png"
 
 
 class Tile(pygame.sprite.Sprite):
-    def __init__(self, image, map_coords: tuple, screen_size: tuple, tilemap_size: tuple):
+    def __init__(self, tile_style, image, map_coords: tuple, screen_size: tuple, tilemap_size: tuple):
         super().__init__()
+        # Store the tile style in order to filter out air tiles later
+        self.tile_style = tile_style
 
         # Get image and associated rect
         self.image = image
@@ -63,31 +65,39 @@ class Player(pygame.sprite.Sprite):
         self.tilemap = tilemap
         self.scale = scale
 
+        # Store version of tilemap which does not contain air blocks
+        self.tilemap_no_air = []
+        for tile in self.tilemap:
+            if tile.tile_style != 0:
+                self.tilemap_no_air.append(tile)
+
         # Store constants
         self.SPEED = 3
         self.GRAVITY = 5
 
     def movement_and_collisions(self):
         keys = pygame.key.get_pressed()
-        inital_pos = self.rect.copy()  # Create the rect to simulate the movement
+        initial_pos = self.rect.copy()  # Create the rect to simulate the movement
         if keys[K_a]:
             self.rect.x -= self.SPEED
         if keys[K_d]:
             self.rect.x += self.SPEED
 
         # Check for collisions within the tilemap
-        is_collision = pygame.sprite.spritecollideany(self, self.tilemap)
+        # TODO: Need to exclude air tiles from this check
+        is_collision = pygame.sprite.spritecollideany(self, self.tilemap_no_air)
         while is_collision:
             # This sets the amount that needs to be added to the rect to move it back towards the initial position
-            x_direction = 1 if self.rect.x < inital_pos.x else -1
-            y_direction = 1 if self.rect.y < inital_pos.y else -1
+            x_direction = 1 if self.rect.x < initial_pos.x else -1
+            y_direction = 1 if self.rect.y < initial_pos.y else -1
 
             # Move the rect back towards the initial position
             self.rect.x += x_direction
             self.rect.y += y_direction
 
             # Check for collisions again
-            is_collision = pygame.sprite.spritecollideany(self, self.tilemap)
+            is_collision = pygame.sprite.spritecollideany(self, self.tilemap_no_air)
 
-    def output(self, screen):
+    def process(self, screen):
+        self.movement_and_collisions()
         screen.blit(self.image, self.rect)

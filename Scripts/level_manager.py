@@ -57,7 +57,7 @@ class Level:
         tile_group = pygame.sprite.Group()
         for y, row in enumerate(self.level_data):
             for x, tile in enumerate(row):
-                tile_group.add(visuals.Tile(self.tiles[int(tile)], (x, y), (800, 800), (16, 16)))
+                tile_group.add(visuals.Tile(int(tile), self.tiles[int(tile)], (x, y), (800, 800), (16, 16)))
         return tile_group
 
     def output(self, screen):
