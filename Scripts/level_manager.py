@@ -31,7 +31,6 @@ class Level:
 
         # Store start and end coords, these are assigned in the create_group method
         self.start_coords = None
-        self.end_coords = None
 
         # Load tile assets
         self.tiles = {
@@ -65,7 +64,6 @@ class Level:
                     tile_group.add(visuals.Tile(int(tile), self.tiles[int(tile)], (x, y), (800, 800), (16, 16)))
             elif y == 16:  # If it is the end of the data, store the start and end coords
                 self.start_coords = (int(row[0]), int(row[1]))
-                self.end_coords = (int(row[2]), int(row[3]))
         return tile_group
 
     def output(self, screen):
