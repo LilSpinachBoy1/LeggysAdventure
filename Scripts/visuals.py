@@ -58,6 +58,7 @@ class Player(pygame.sprite.Sprite):
         self.image = pygame.transform.scale(pygame.image.load(PATH_TO_SNAIL), (scale, scale))
         self.rect = self.image.get_rect()
         self.rect.topleft = start_pos
+        self.direction = 1  # 1 = right, -1 = left
 
         # Store params in the object
         self.screen_size = screen_size
@@ -84,11 +85,14 @@ class Player(pygame.sprite.Sprite):
     def movement_and_collisions(self):
         keys = pygame.key.get_pressed()
         initial_pos = self.rect.copy()  # Create the rect to simulate the movement
+        old_direction = self.direction  # Store the old direction to check if it has changed
         # Do x movement
         if keys[K_a]:
             self.rect.x -= self.SPEED
+            self.direction = -1
         if keys[K_d]:
             self.rect.x += self.SPEED
+            self.direction = 1
 
         # ----------------------- COLLISION CHECK 1 - X MOVEMENT -----------------------
         is_collision_x = pygame.sprite.spritecollideany(self, self.tilemap_no_air)
@@ -106,6 +110,10 @@ class Player(pygame.sprite.Sprite):
 
             # Check for collisions again
             is_collision_x = pygame.sprite.spritecollideany(self, self.tilemap_no_air)
+
+        # Flip sprite based on direction of movement
+        if self.direction != old_direction:
+            self.image = pygame.transform.flip(self.image, True, False)
 
         # Do y movement
         self.velocity_y += self.GRAVITY  # Increase velocity based on gravity value
