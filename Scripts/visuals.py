@@ -69,7 +69,7 @@ class Player(pygame.sprite.Sprite):
         # Store version of tilemap which does not contain air blocks
         self.tilemap_no_air = []
         for tile in self.tilemap:
-            if tile.tile_style != 0:
+            if not (tile.tile_style == 0 or tile.tile_style == 9):
                 self.tilemap_no_air.append(tile)
 
         # Store constants
@@ -80,6 +80,13 @@ class Player(pygame.sprite.Sprite):
         # Store the player's current velocity, and weather they are grounded
         self.velocity_y = 0
         self.is_grounded = False
+
+    def check_if_on_finish_tile(self):
+        for tile in self.tilemap:
+            if tile.tile_style == 9:
+                if self.rect.colliderect(tile.rect):
+                    return True
+        return False
 
     # noinspection PyTypeChecker
     def movement_and_collisions(self):
@@ -145,5 +152,7 @@ class Player(pygame.sprite.Sprite):
                 self.is_grounded = False  # Indicate the player is no longer grounded, to prevent infinite jumping
 
     def process(self, screen):
+        is_finished = self.check_if_on_finish_tile()
+        print(is_finished)
         self.movement_and_collisions()
         screen.blit(self.image, self.rect)
