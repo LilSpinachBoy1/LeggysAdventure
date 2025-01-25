@@ -18,9 +18,9 @@ FPS = 120
 
 # Load Level
 level1 = l_m.Level(1)
-
+print(level1.start_coords)
 # Create player
-player = vis.Player((350, 400), WINDOW_SIZE, level1.level_data, level1.tilemap_sprite_group, 100)
+player = vis.Player(level1.start_coords, WINDOW_SIZE, level1.level_data, level1.tilemap_sprite_group, 100)
 
 # Game loop
 while True:

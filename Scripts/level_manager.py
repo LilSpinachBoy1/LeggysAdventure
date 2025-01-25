@@ -29,6 +29,10 @@ class Level:
         self.level_num = level_num
         self.level_data = self.load_level_data()
 
+        # Store start and end coords, these are assigned in the create_group method
+        self.start_coords = None
+        self.end_coords = None
+
         # Load tile assets
         self.tiles = {
             0: pygame.transform.scale(pygame.image.load(PATH_TO_TILEMAP + "0.png"), (TILE_SIZE, TILE_SIZE)),
@@ -56,8 +60,12 @@ class Level:
         # ENUMERATE: This splits each item into its index and value
         tile_group = pygame.sprite.Group()
         for y, row in enumerate(self.level_data):
-            for x, tile in enumerate(row):
-                tile_group.add(visuals.Tile(int(tile), self.tiles[int(tile)], (x, y), (800, 800), (16, 16)))
+            if y != 16:
+                for x, tile in enumerate(row):
+                    tile_group.add(visuals.Tile(int(tile), self.tiles[int(tile)], (x, y), (800, 800), (16, 16)))
+            elif y == 16:  # If it is the end of the data, store the start and end coords
+                self.start_coords = (int(row[0]), int(row[1]))
+                self.end_coords = (int(row[2]), int(row[3]))
         return tile_group
 
     def output(self, screen):

@@ -11,6 +11,8 @@ Each type of tile has a corresponding code, which is as follows:
 - 2: Grass tile (i.e. Green and brown)
 - 3: Brick tile
 
+Following this grid, the final line of the file should store the start and end positions for the level, with each value separated by a space.
+
 ## Accessing tiles
 When a Level object is created, it creates a dictionary of tiles, with the key corresponding to each tile's code (see creating levels above).
 ## Debugging a level
