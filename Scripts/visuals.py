@@ -38,18 +38,6 @@ class Tile(pygame.sprite.Sprite):
         screen.blit(self.image, self.rect)
 
 
-# WHAT THIS NEEDS TO DO
-# - Load an image for the player
-# - Scale the image to a set size
-# - MOVEMENT AND COLLISIONS:
-#   - Move the player sprite
-#   - Check for collisions
-#     - Make a new rect for where the player would move to with current movement
-#     - Check if this rect collides with any other rects
-#     - If it does, reduce the movement by one
-#     - Repeat until there is no collision
-#     - Do movement
-# - Output the player sprite to the screen
 class Player(pygame.sprite.Sprite):
     def __init__(self, start_pos: tuple, screen_size: tuple, tilemap_data, tilemap, scale: int):
         super().__init__()
@@ -80,6 +68,9 @@ class Player(pygame.sprite.Sprite):
         # Store the player's current velocity, and weather they are grounded
         self.velocity_y = 0
         self.is_grounded = False
+
+        # Store variable to check if the player has finished the level
+        self.is_finished = False
 
     def check_if_on_finish_tile(self):
         for tile in self.tilemap:
@@ -152,7 +143,6 @@ class Player(pygame.sprite.Sprite):
                 self.is_grounded = False  # Indicate the player is no longer grounded, to prevent infinite jumping
 
     def process(self, screen):
-        is_finished = self.check_if_on_finish_tile()
-        print(is_finished)
+        self.is_finished = self.check_if_on_finish_tile()
         self.movement_and_collisions()
         screen.blit(self.image, self.rect)
