@@ -73,7 +73,10 @@ class Player(pygame.sprite.Sprite):
 
         # Store constants
         self.SPEED = 4
-        self.GRAVITY = 7
+        self.GRAVITY = 0.5
+
+        # Store the player's current velocity
+        self.velocity_y = 0
 
     # noinspection PyTypeChecker
     def movement_and_collisions(self):
@@ -103,11 +106,14 @@ class Player(pygame.sprite.Sprite):
             is_collision_x = pygame.sprite.spritecollideany(self, self.tilemap_no_air)
 
         # Do y movement
-        self.rect.y += self.GRAVITY
+        self.velocity_y += self.GRAVITY  # Increase velocity based on gravity value
+        self.rect.y += self.velocity_y  # Move the player based on the velocity
 
         # ----------------------- COLLISION CHECK 2 - Y MOVEMENT -----------------------
         is_collision_y = pygame.sprite.spritecollideany(self, self.tilemap_no_air)
         while is_collision_y:
+            self.velocity_y = 0  # Kill velocity, as there has been a collision
+
             # These statements set the amount that needs to be added to the rect to move it back towards the initial position
             if self.rect.y < initial_pos.y:
                 y_direction = 1
