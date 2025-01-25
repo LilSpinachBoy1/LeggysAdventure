@@ -85,13 +85,9 @@ class Player(pygame.sprite.Sprite):
         if keys[K_d]:
             self.rect.x += self.SPEED
 
-        # Do y movement
-        self.rect.y += self.GRAVITY
-
-        # Check for collisions within the tilemap
-        # ISSUE: When player is grounded, they can't move left or right. This is because as the player falls, it triggers a ground collision
-        is_collision = pygame.sprite.spritecollideany(self, self.tilemap_no_air)
-        while is_collision:
+        # ----------------------- COLLISION CHECK 1 - X MOVEMENT -----------------------
+        is_collision_x = pygame.sprite.spritecollideany(self, self.tilemap_no_air)
+        while is_collision_x:
             # These statements set the amount that needs to be added to the rect to move it back towards the initial position
             if self.rect.x < initial_pos.x:
                 x_direction = 1
@@ -100,6 +96,19 @@ class Player(pygame.sprite.Sprite):
             else:
                 x_direction = 0
 
+            # Move the rect back towards the initial position
+            self.rect.x += x_direction
+
+            # Check for collisions again
+            is_collision_x = pygame.sprite.spritecollideany(self, self.tilemap_no_air)
+
+        # Do y movement
+        self.rect.y += self.GRAVITY
+
+        # ----------------------- COLLISION CHECK 2 - Y MOVEMENT -----------------------
+        is_collision_y = pygame.sprite.spritecollideany(self, self.tilemap_no_air)
+        while is_collision_y:
+            # These statements set the amount that needs to be added to the rect to move it back towards the initial position
             if self.rect.y < initial_pos.y:
                 y_direction = 1
             elif self.rect.y > initial_pos.y:
@@ -108,11 +117,10 @@ class Player(pygame.sprite.Sprite):
                 y_direction = 0
 
             # Move the rect back towards the initial position
-            self.rect.x += x_direction
             self.rect.y += y_direction
 
             # Check for collisions again
-            is_collision = pygame.sprite.spritecollideany(self, self.tilemap_no_air)
+            is_collision_y = pygame.sprite.spritecollideany(self, self.tilemap_no_air)
 
     def process(self, screen):
         self.movement_and_collisions()
