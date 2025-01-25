@@ -38,6 +38,7 @@ class Level:
             1: pygame.transform.scale(pygame.image.load(PATH_TO_TILEMAP + "1.png"), (TILE_SIZE, TILE_SIZE)),
             2: pygame.transform.scale(pygame.image.load(PATH_TO_TILEMAP + "2.png"), (TILE_SIZE, TILE_SIZE)),
             3: pygame.transform.scale(pygame.image.load(PATH_TO_TILEMAP + "3.png"), (TILE_SIZE, TILE_SIZE)),
+            9: pygame.transform.scale(pygame.image.load(PATH_TO_TILEMAP + "9.png"), (TILE_SIZE, TILE_SIZE)),
         }
 
         # Get the tilemap group

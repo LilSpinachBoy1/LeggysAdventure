@@ -10,6 +10,9 @@ Each type of tile has a corresponding code, which is as follows:
 - 1: Mud tile (i.e. Brown)
 - 2: Grass tile (i.e. Green and brown)
 - 3: Brick tile
+- 9: End of level tile*
+
+\* If the player collides with this tile, the level will end.
 
 Following this grid, the final line of the file should store the start and end positions for the level, with each value separated by a space.
 
