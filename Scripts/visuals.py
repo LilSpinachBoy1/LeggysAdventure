@@ -74,9 +74,11 @@ class Player(pygame.sprite.Sprite):
         # Store constants
         self.SPEED = 4
         self.GRAVITY = 0.5
+        self.JUMP_STRENGTH = -10
 
-        # Store the player's current velocity
+        # Store the player's current velocity, and weather they are grounded
         self.velocity_y = 0
+        self.is_grounded = False
 
     # noinspection PyTypeChecker
     def movement_and_collisions(self):
@@ -113,6 +115,7 @@ class Player(pygame.sprite.Sprite):
         is_collision_y = pygame.sprite.spritecollideany(self, self.tilemap_no_air)
         while is_collision_y:
             self.velocity_y = 0  # Kill velocity, as there has been a collision
+            self.is_grounded = True  # Indicate the player is grounded in order to allow jumping
 
             # These statements set the amount that needs to be added to the rect to move it back towards the initial position
             if self.rect.y < initial_pos.y:
@@ -127,6 +130,11 @@ class Player(pygame.sprite.Sprite):
 
             # Check for collisions again
             is_collision_y = pygame.sprite.spritecollideany(self, self.tilemap_no_air)
+
+        if self.is_grounded:  # Only allow jumping if the player is grounded
+            if keys[K_SPACE]:
+                self.velocity_y += self.JUMP_STRENGTH
+                self.is_grounded = False  # Indicate the player is no longer grounded, to prevent infinite jumping
 
     def process(self, screen):
         self.movement_and_collisions()
