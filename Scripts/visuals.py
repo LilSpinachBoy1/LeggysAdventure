@@ -63,7 +63,7 @@ class Player(pygame.sprite.Sprite):
         # Store constants
         self.SPEED = 4
         self.GRAVITY = 0.5
-        self.JUMP_STRENGTH = -10
+        self.JUMP_STRENGTH = -12
 
         # Store the player's current velocity, and weather they are grounded
         self.velocity_y = 0
