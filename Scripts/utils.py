@@ -59,6 +59,9 @@ class Button:
         :param box_line: The outline colour of the button passed as RGB, defaults to black
         :param padding: The percentage padding of the button, defaults to 0.5
         """
+        # Create variable to store if the button is pressed
+        self.pressed = False
+
         # Create the text to use
         self.text = Text(text, text_size, coords, surf, colour=text_colour)
 
@@ -91,4 +94,7 @@ class Button:
 
         if pressed[0]:  # Check if the mouse button is pressed: left click
             if mouse_pos[0] in self.inp_range_x and mouse_pos[1] in self.inp_range_y:  # Check if the pointer is in range of the button
-                self.function()
+                if self.function is None:
+                    self.pressed = True
+                else:
+                    self.function()

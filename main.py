@@ -19,6 +19,7 @@ WINDOW = pygame.display.set_mode(WINDOW_SIZE)
 pygame.display.set_caption("Leggy's Big Adventure!")
 FPS = 120
 
+
 # Create game class
 class Game:
     def __init__(self):
@@ -30,7 +31,10 @@ class Game:
 
         # Create UI elements
         title_text = ut.Text("Leggy's Big Adventure!", 55, (53, 50), WINDOW, TEXT_AQUA)
-        quit_button = ut.Button(quit_func, "Quit", 30, (350, 400), WINDOW, TEXT_AQUA, WHITE, BLACK, 10)
+        quit_button = ut.Button(quit_func, "Quit", 50, (325, 450), WINDOW, TEXT_AQUA, WHITE, BLACK, 10)
+        level_1_button = ut.Button(None, "Level 1", 50, (300, 150), WINDOW, TEXT_AQUA, WHITE, BLACK, 10)
+        level_2_button = ut.Button(None, "Level 2", 50, (295, 250), WINDOW, TEXT_AQUA, WHITE, BLACK, 10)
+        level_3_button = ut.Button(None, "Level 3", 50, (297, 350), WINDOW, TEXT_AQUA, WHITE, BLACK, 10)
 
         # Create player and tilemap elements
         level = l_m.Level(0)
@@ -46,8 +50,14 @@ class Game:
             pressed = pygame.key.get_pressed()
             if pressed[K_q]:
                 pygame.event.post(pygame.event.Event(QUIT))
-            elif pressed[K_1]:
+            if pressed[K_1] or level_1_button.pressed:
                 self.scene = "level_1"
+                running = False
+            if pressed[K_2] or level_2_button.pressed:
+                self.scene = "level_2"
+                running = False
+            if pressed[K_3] or level_3_button.pressed:
+                self.scene = "level_3"
                 running = False
 
             WINDOW.fill(PASTEL_BLUE)
@@ -55,6 +65,9 @@ class Game:
             player.process(WINDOW)
             title_text.out()
             quit_button.out()
+            level_1_button.out()
+            level_2_button.out()
+            level_3_button.out()
 
             pygame.display.flip()
             pygame.time.Clock().tick(FPS)
@@ -97,6 +110,12 @@ class Game:
         # Delete level and player objects
         del level1
         del player
+
+    def level_2(self):
+        pass
+
+    def level_3(self):
+        pass
 
     def run_game(self):
         while True:
