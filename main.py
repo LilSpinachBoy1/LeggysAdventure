@@ -25,7 +25,14 @@ class Game:
         self.scene = "menu"
 
     def menu(self):
+        # Create functions for buttons
+        quit_func = lambda: pygame.event.post(pygame.event.Event(QUIT))
+
+        # Create UI elements
         title_text = ut.Text("Leggy's Big Adventure!", 55, (53, 50), WINDOW, TEXT_AQUA)
+        quit_button = ut.Button(quit_func, "Quit", 30, (350, 400), WINDOW, TEXT_AQUA, WHITE, BLACK, 10)
+
+        # Create player and tilemap elements
         level = l_m.Level(0)
         player = vis.Player(level.start_coords, WINDOW_SIZE, level.level_data, level.tilemap_sprite_group, 100)
 
@@ -47,6 +54,7 @@ class Game:
             level.output(WINDOW)
             player.process(WINDOW)
             title_text.out()
+            quit_button.out()
 
             pygame.display.flip()
             pygame.time.Clock().tick(FPS)
