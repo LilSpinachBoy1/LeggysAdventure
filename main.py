@@ -98,6 +98,12 @@ class Game:
                 self.scene = "menu"
                 running = False
 
+            # Check for end of game
+            if player.check_if_on_finish_tile():
+                # TODO: Add end of level screen
+                self.scene = "menu"
+                running = False
+
             # Draw level
             WINDOW.fill(PASTEL_BLUE)
             level1.output(WINDOW)
