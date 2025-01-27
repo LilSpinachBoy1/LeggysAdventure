@@ -31,7 +31,7 @@ class Game:
 
         # Create UI elements
         title_text = ut.Text("Leggy's Big Adventure!", 55, (53, 50), WINDOW, TEXT_AQUA)
-        quit_button = ut.Button(quit_func, "Quit", 50, (325, 450), WINDOW, TEXT_AQUA, WHITE, BLACK, 10)
+        quit_button = ut.Button(quit_func, "Quit", 50, (331, 450), WINDOW, TEXT_AQUA, WHITE, BLACK, 10)
         level_1_button = ut.Button(None, "Level 1", 50, (300, 150), WINDOW, TEXT_AQUA, WHITE, BLACK, 10)
         level_2_button = ut.Button(None, "Level 2", 50, (295, 250), WINDOW, TEXT_AQUA, WHITE, BLACK, 10)
         level_3_button = ut.Button(None, "Level 3", 50, (297, 350), WINDOW, TEXT_AQUA, WHITE, BLACK, 10)
