@@ -8,6 +8,27 @@ import os
 pygame.init()
 
 PATH_TO_FONT = os.getcwd() + "/Assets/Fonts/"
+PATH_TO_LEVELS = os.getcwd() + "/Levels/"
+prog_file = PATH_TO_LEVELS + "player_prog.txt"
+
+
+# TODO: Change this func to create a list of the results, e.g. [Y, Y, N], and then write it
+def write_complete_level(level_num):
+    with open(prog_file, "w") as file:
+        # Write that levels are complete up to the specified level num
+        for i in range(level_num):
+            file.write("Y")
+
+        # Fill the rest of the levels as incomplete
+        for i in range(3 - level_num):
+            file.write("N")
+
+
+# TODO: Finish this
+def read_complete_level():
+    with open(prog_file, "r") as file:
+        x = file.read().strip().split(" ")
+
 
 class Text:
     def __init__(self, text: str, size: int, coords: (int, int), surf: pygame.Surface, colour: (int, int, int) = (0, 0, 0), font: str = "ExtraBeige-2vGeW.ttf") -> None:

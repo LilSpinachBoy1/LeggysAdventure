@@ -83,6 +83,8 @@ class Game:
         player = vis.Player(level1.start_coords, WINDOW_SIZE, level1.level_data, level1.tilemap_sprite_group, 100)
         # Create text object
         title = ut.Text("Get to the cheese!", 50, (150, 50), WINDOW, TEXT_AQUA)
+        victory_text = ut.Text("You did it!", 75, (200, 250), WINDOW, TEXT_AQUA)
+        quit_text = ut.Text("Press ESC to return to menu...", 25, (200, 650), WINDOW, TEXT_AQUA)
 
         running = True
         # Game loop
@@ -98,17 +100,17 @@ class Game:
                 self.scene = "menu"
                 running = False
 
-            # Check for end of game
-            if player.check_if_on_finish_tile():
-                # TODO: Add end of level screen
-                self.scene = "menu"
-                running = False
-
             # Draw level
             WINDOW.fill(PASTEL_BLUE)
             level1.output(WINDOW)
             player.process(WINDOW)
-            title.out()
+
+            # Output text based on if the player has finished or not
+            if player.check_if_on_finish_tile():
+                victory_text.out()
+                quit_text.out()
+            else:
+                title.out()
 
             pygame.display.flip()
             pygame.time.Clock().tick(FPS)
@@ -129,6 +131,10 @@ class Game:
                 self.menu()
             elif self.scene == "level_1":
                 self.level_1()
+            elif self.scene == "level_2":
+                self.level_2()
+            elif self.scene == "level_3":
+                self.level_3()
 
 
 # Run the game
