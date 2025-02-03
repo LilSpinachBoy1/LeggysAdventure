@@ -126,7 +126,48 @@ class Game:
         del player
 
     def level_2(self):
-        pass
+        # Load Level
+        level2 = l_m.Level(2)
+        # Create player
+        player = vis.Player(level2.start_coords, WINDOW_SIZE, level2.level_data, level2.tilemap_sprite_group, 100)
+        # Create text object
+        title = ut.Text("Keep Going!", 50, (250, 50), WINDOW, TEXT_AQUA)
+        victory_text = ut.Text("Nice one!", 75, (110, 250), WINDOW, TEXT_AQUA)
+        quit_text = ut.Text("Press ESC to return to menu...", 25, (200, 750), WINDOW, TEXT_AQUA)
+
+        running = True
+        # Game loop
+        while running:
+            for event in pygame.event.get():
+                if event.type == pygame.QUIT:
+                    pygame.quit()
+                    sys.exit()
+
+            # Check for key presses
+            pressed = pygame.key.get_pressed()
+            if pressed[K_ESCAPE]:
+                self.scene = "menu"
+                running = False
+
+            # Draw level
+            WINDOW.fill(PASTEL_BLUE)
+            level2.output(WINDOW)
+            player.process(WINDOW)
+
+            # Output text based on if the player has finished or not
+            if player.check_if_on_finish_tile():
+                ut.write_complete_level(2)
+                victory_text.out()
+                quit_text.out()
+            else:
+                title.out()
+
+            pygame.display.flip()
+            pygame.time.Clock().tick(FPS)
+
+        # Delete level and player objects
+        del level2
+        del player
 
     def level_3(self):
         pass
