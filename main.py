@@ -31,6 +31,7 @@ class Game:
 
         # Create UI elements
         title_text = ut.Text("Leggy's Big Adventure!", 55, (53, 50), WINDOW, TEXT_AQUA)
+        reset_text = ut.Text("Press R to reset progress data...", 25, (200, 750), WINDOW, TEXT_AQUA)
         quit_button = ut.Button(quit_func, "Quit", 50, (331, 450), WINDOW, TEXT_AQUA, WHITE, BLACK, 10)
         level_1_button = ut.Button(None, "Level 1", 50, (300, 150), WINDOW, TEXT_AQUA, WHITE, BLACK, 10)
         level_2_button = ut.Button(None, "Level 2", 50, (295, 250), WINDOW, TEXT_AQUA, WHITE, BLACK, 10)
@@ -48,15 +49,18 @@ class Game:
                     sys.exit()
 
             pressed = pygame.key.get_pressed()
+            level_complete_data = ut.read_complete_level()
             if pressed[K_q]:
                 pygame.event.post(pygame.event.Event(QUIT))
+            if pressed[K_r]:
+                ut.write_complete_level(0)
             if pressed[K_1] or level_1_button.pressed:
                 self.scene = "level_1"
                 running = False
-            if pressed[K_2] or level_2_button.pressed:
+            if (pressed[K_2] or level_2_button.pressed) and level_complete_data[0] == "Y":
                 self.scene = "level_2"
                 running = False
-            if pressed[K_3] or level_3_button.pressed:
+            if (pressed[K_3] or level_3_button.pressed) and level_complete_data[1] == "Y":
                 self.scene = "level_3"
                 running = False
 
@@ -64,6 +68,7 @@ class Game:
             level.output(WINDOW)
             player.process(WINDOW)
             title_text.out()
+            reset_text.out()
             quit_button.out()
             level_1_button.out()
             level_2_button.out()
@@ -107,6 +112,7 @@ class Game:
 
             # Output text based on if the player has finished or not
             if player.check_if_on_finish_tile():
+                ut.write_complete_level(1)
                 victory_text.out()
                 quit_text.out()
             else:
