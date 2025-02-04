@@ -170,7 +170,29 @@ class Game:
         del player
 
     def level_3(self):
-        pass
+        # Load Level
+        level3 = l_m.Level(3)
+        # Create player
+        player = vis.Player(level3.start_coords, WINDOW_SIZE, level3.level_data, level3.tilemap_sprite_group, 100)
+
+        running = True
+        while running:
+            for event in pygame.event.get():
+                if event.type == pygame.QUIT:
+                    pygame.quit()
+                    sys.exit()
+
+            pressed = pygame.key.get_pressed()
+            if pressed[K_ESCAPE]:
+                self.scene = "menu"
+                running = False
+
+            WINDOW.fill(PASTEL_BLUE)
+            level3.output(WINDOW)
+            player.process(WINDOW)
+
+            pygame.display.flip()
+            pygame.time.Clock().tick(FPS)
 
     def run_game(self):
         while True:
