@@ -71,8 +71,11 @@ class Game:
             reset_text.out()
             quit_button.out()
             level_1_button.out()
-            level_2_button.out()
-            level_3_button.out()
+            
+            if level_complete_data[0] == "Y":
+                level_2_button.out()
+            if level_complete_data[1] == "Y":
+                level_3_button.out()
 
             pygame.display.flip()
             pygame.time.Clock().tick(FPS)
