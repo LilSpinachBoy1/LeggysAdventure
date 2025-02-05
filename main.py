@@ -178,6 +178,11 @@ class Game:
         # Create player
         player = vis.Player(level3.start_coords, WINDOW_SIZE, level3.level_data, level3.tilemap_sprite_group, 100)
 
+        # Create text
+        title = ut.Text("Last push!", 50, (65, 60), WINDOW, TEXT_AQUA)
+        victory_text = ut.Text("You did it!", 75, (200, 50), WINDOW, TEXT_AQUA)
+        quit_text = ut.Text("Press ESC to return to menu...", 25, (200, 750), WINDOW, TEXT_AQUA)
+
         running = True
         while running:
             for event in pygame.event.get():
@@ -193,6 +198,13 @@ class Game:
             WINDOW.fill(PASTEL_BLUE)
             level3.output(WINDOW)
             player.process(WINDOW)
+
+            if player.check_if_on_finish_tile():
+                ut.write_complete_level(3)
+                victory_text.out()
+                quit_text.out()
+            else:
+                title.out()
 
             pygame.display.flip()
             pygame.time.Clock().tick(FPS)
